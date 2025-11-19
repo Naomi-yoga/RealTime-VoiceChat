@@ -1,0 +1,36 @@
+# Core dependencies
+pyaudio>=0.2.13
+numpy>=1.24.0
+pyyaml>=6.0
+python-dotenv>=1.0.0
+colorama>=0.4.6
+pydub>=0.25.1
+
+# Speech Recognition (ASR)
+openai-whisper>=20231117
+faster-whisper>=0.10.0
+webrtcvad>=2.0.10
+azure-cognitiveservices-speech>=1.34.0
+
+# Large Language Models (LLM)
+openai>=1.3.0
+requests>=2.31.0
+aiohttp>=3.9.0
+
+# Text-to-Speech (TTS)
+edge-tts>=6.1.9
+azure-cognitiveservices-speech>=1.34.0
+pyttsx3>=2.90
+
+# Audio processing
+soundfile>=0.12.1
+librosa>=0.10.1
+silero-vad>=4.0.0
+
+# Utils
+rich>=13.7.0
+click>=8.1.7
+tqdm>=4.66.0
+
+# Packaging (optional)
+pyinstaller>=6.3.0

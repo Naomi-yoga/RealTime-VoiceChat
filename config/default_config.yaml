@@ -1,0 +1,205 @@
+# RT-VoiceChat-CLI 默认配置文件
+
+# 大语言模型配置
+models:
+  # 当前使用的模型
+  active: "deepseek"
+  
+  # DeepSeek 配置
+  deepseek:
+    api_key: ""  # 请在此填入你的 API Key 或使用环境变量 DEEPSEEK_API_KEY
+    base_url: "https://api.deepseek.com/v1"
+    model: "deepseek-chat"
+    temperature: 0.7
+    max_tokens: 2000
+    stream: true
+  
+  # OpenAI 配置
+  openai:
+    api_key: ""  # 请在此填入你的 API Key 或使用环境变量 OPENAI_API_KEY
+    base_url: "https://api.openai.com/v1"
+    model: "gpt-4o-mini"
+    temperature: 0.7
+    max_tokens: 2000
+    stream: true
+  
+  # 智谱 AI 配置
+  zhipu:
+    api_key: ""  # 请在此填入你的 API Key 或使用环境变量 ZHIPU_API_KEY
+    base_url: "https://open.bigmodel.cn/api/paas/v4"
+    model: "glm-4"
+    temperature: 0.7
+    max_tokens: 2000
+    stream: true
+  
+  # 百度文心一言配置
+  wenxin:
+    api_key: ""
+    secret_key: ""
+    model: "ernie-4.0-8k"
+  
+  # 阿里通义千问配置
+  qwen:
+    api_key: ""
+    model: "qwen-turbo"
+  
+  # 月之暗面 Kimi 配置
+  kimi:
+    api_key: ""
+    base_url: "https://api.moonshot.cn/v1"
+    model: "moonshot-v1-8k"
+  
+  # 本地 Ollama 配置
+  ollama:
+    base_url: "http://localhost:11434"
+    model: "llama3:8b"
+    temperature: 0.7
+    stream: true
+
+# 语音识别(ASR)配置
+asr:
+  # 引擎选择: whisper, azure, baidu
+  engine: "whisper"
+  
+  # Whisper 配置
+  whisper:
+    model: "base"  # tiny, base, small, medium, large
+    language: "zh"  # zh, en, auto
+    device: "cpu"  # cpu, cuda
+    compute_type: "int8"  # int8, float16, float32
+  
+  # Azure Speech 配置
+  azure:
+    api_key: ""
+    region: "eastasia"
+    language: "zh-CN"
+  
+  # 百度语音配置
+  baidu:
+    app_id: ""
+    api_key: ""
+    secret_key: ""
+
+# 语音合成(TTS)配置
+tts:
+  # 引擎选择: edge, azure, openai, pyttsx3
+  engine: "edge"
+  
+  # 通用参数
+  speech_rate: 1.0  # 语速 0.5-2.0
+  pitch: 1.0  # 音调 0.5-2.0
+  volume: 1.0  # 音量 0.0-1.0
+  
+  # 当前使用的语音包
+  active_voice: "female_gentle"
+  
+  # 语音包配置
+  voice_packs:
+    female_gentle:
+      engine: "edge"
+      voice: "zh-CN-XiaoxiaoNeural"
+      style: "gentle"
+    
+    female_cheerful:
+      engine: "edge"
+      voice: "zh-CN-XiaoyiNeural"
+      style: "cheerful"
+    
+    male_calm:
+      engine: "edge"
+      voice: "zh-CN-YunxiNeural"
+      style: "calm"
+    
+    male_energetic:
+      engine: "edge"
+      voice: "zh-CN-YunyangNeural"
+      style: "energetic"
+  
+  # Edge TTS 配置
+  edge:
+    rate: "+0%"
+    pitch: "+0Hz"
+  
+  # Azure TTS 配置
+  azure:
+    api_key: ""
+    region: "eastasia"
+  
+  # OpenAI TTS 配置
+  openai:
+    api_key: ""
+    model: "tts-1"
+    voice: "alloy"
+
+# 音频配置
+audio:
+  # 输入设备
+  input:
+    device_index: null  # null 为默认设备
+    sample_rate: 16000
+    channels: 1
+    chunk_size: 1024
+    format: "int16"
+  
+  # 输出设备
+  output:
+    device_index: null  # null 为默认设备
+    sample_rate: 24000
+    channels: 1
+  
+  # VAD (语音活动检测) 配置
+  vad:
+    enabled: true
+    aggressiveness: 3  # 0-3, 越高越激进
+    frame_duration_ms: 30  # 10, 20, 30
+    padding_duration_ms: 300
+    silence_duration_ms: 700  # 静音多久后认为说话结束
+  
+  # 音频预处理
+  preprocessing:
+    noise_reduction: true
+    auto_gain_control: true
+    echo_cancellation: false
+
+# 对话管理配置
+conversation:
+  # 系统提示词
+  system_prompt: "你是一个友好、专业的AI助手。请用简洁、口语化的方式回答问题。"
+  
+  # 上下文管理
+  max_history: 10  # 保留最近几轮对话
+  context_window: 4096  # 上下文窗口大小
+  
+  # 对话历史保存
+  save_history: true
+  history_file: "conversation_history.json"
+
+# 界面配置
+ui:
+  # 显示设置
+  show_transcription: true  # 显示识别文本
+  show_response: true  # 显示模型响应
+  show_audio_level: true  # 显示音频电平
+  show_status: true  # 显示状态信息
+  
+  # 颜色主题
+  theme:
+    user_text: "cyan"
+    ai_text: "green"
+    system_text: "yellow"
+    error_text: "red"
+
+# 性能配置
+performance:
+  max_concurrent_tasks: 3
+  response_timeout: 30  # 秒
+  retry_attempts: 3
+  cache_enabled: true
+
+# 日志配置
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+  file: "rt-voicechat.log"
+  console: true
+  max_size: "10MB"
+  backup_count: 3
