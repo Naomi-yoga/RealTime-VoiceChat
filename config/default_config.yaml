@@ -58,27 +58,16 @@ models:
 
 # 语音识别(ASR)配置
 asr:
-  # 引擎选择: whisper, azure, baidu
+  # 使用 Whisper 本地语音识别
   engine: "whisper"
   
   # Whisper 配置
   whisper:
-    model: "base"  # tiny, base, small, medium, large
-    language: "zh"  # zh, en, auto
-    device: "cpu"  # cpu, cuda
-    compute_type: "int8"  # int8, float16, float32
-  
-  # Azure Speech 配置
-  azure:
-    api_key: ""
-    region: "eastasia"
-    language: "zh-CN"
-  
-  # 百度语音配置
-  baidu:
-    app_id: ""
-    api_key: ""
-    secret_key: ""
+    model: "base"  # 模型大小: tiny(~75MB), base(~150MB), small, medium, large
+    language: "zh"  # 识别语言: zh, en, auto
+    device: "cpu"   # 运行设备: cpu, cuda
+    compute_type: "int8"  # 计算类型: int8, float16, float32
+    local_model_path: ""  # 本地模型路径（可选，留空则自动从 models/ 查找或下载）
 
 # 语音合成(TTS)配置
 tts:

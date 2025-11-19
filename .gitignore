@@ -64,12 +64,6 @@ conversation_history_*.json
 .cache/
 *.cache
 
-# 模型文件（如果下载了本地模型）
-models/
-*.pt
-*.pth
-*.bin
-*.onnx
 
 # 测试覆盖率
 .coverage
