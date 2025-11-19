@@ -172,7 +172,7 @@ conversation:
   
   # 对话历史保存
   save_history: true
-  history_file: "conversation_history.json"
+  history_file: "logs/conversation_history.json"  # 保存到 logs 文件夹
 
 # 界面配置
 ui:
@@ -199,7 +199,7 @@ performance:
 # 日志配置
 logging:
   level: "INFO"  # DEBUG, INFO, WARNING, ERROR
-  file: "rt-voicechat.log"
+  file: "logs/rt-voicechat.log"  # 日志保存到 logs 文件夹
   console: true
   max_size: "10MB"
   backup_count: 3

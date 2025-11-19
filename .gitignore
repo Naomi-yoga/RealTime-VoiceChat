@@ -1,0 +1,92 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environment
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+logs/*.log
+logs/*.log.*
+logs/*.json
+!logs/.gitkeep
+*.log
+*.log.*
+
+# 对话历史
+conversation_history.json
+conversation_history_*.json
+
+# 环境变量
+.env
+.env.local
+
+# 音频文件
+*.wav
+*.mp3
+*.ogg
+*.flac
+
+# 缓存
+.cache/
+*.cache
+
+# 模型文件（如果下载了本地模型）
+models/
+*.pt
+*.pth
+*.bin
+*.onnx
+
+# 测试覆盖率
+.coverage
+htmlcov/
+.pytest_cache/
+
+# 打包文件
+*.spec
+*.exe
+*.app
+*.dmg
+
+# 临时文件
+*.tmp
+*.temp
+~*
+
+# 系统文件
+Thumbs.db
+.Trash-*

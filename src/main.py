@@ -137,6 +137,11 @@ class VoiceChatCLI:
             except KeyboardInterrupt:
                 console.print("\n[yellow]检测到中断，退出程序[/yellow]")
                 break
+            except EOFError:
+                # 非交互式环境或输入流关闭
+                console.print("\n[yellow]输入流已关闭，退出程序[/yellow]")
+                self.logger.info("检测到 EOFError，程序正常退出")
+                break
             except Exception as e:
                 console.print(f"[red]发生错误: {e}[/red]")
                 self.logger.error(f"主循环错误: {e}", exc_info=True)

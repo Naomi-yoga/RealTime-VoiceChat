@@ -1,8 +1,15 @@
 """语音活动检测(VAD)模块"""
 import numpy as np
-import webrtcvad
 from typing import Optional
 from ..utils import get_logger, calculate_rms
+
+# 尝试导入 webrtcvad，如果不可用则设为 None
+try:
+    import webrtcvad
+    HAS_WEBRTCVAD = True
+except ImportError:
+    webrtcvad = None
+    HAS_WEBRTCVAD = False
 
 logger = get_logger("vad")
 
@@ -35,7 +42,11 @@ class VADDetector:
         self.silence_duration_ms = silence_duration_ms
         
         # 初始化 WebRTC VAD
-        self.vad = webrtcvad.Vad(aggressiveness)
+        if not HAS_WEBRTCVAD:
+            logger.warning("webrtcvad 未安装，VAD 功能将受限。请安装: pip install webrtcvad")
+            self.vad = None
+        else:
+            self.vad = webrtcvad.Vad(aggressiveness)
         
         # 计算帧大小（样本数）
         self.frame_size = int(sample_rate * frame_duration_ms / 1000)
