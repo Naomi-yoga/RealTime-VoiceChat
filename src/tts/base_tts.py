@@ -1,6 +1,6 @@
 """TTS基类"""
 from abc import ABC, abstractmethod
-from typing import Optional
+from typing import Optional, Iterator, AsyncIterator
 
 
 class BaseTTS(ABC):
@@ -20,7 +20,7 @@ class BaseTTS(ABC):
     @abstractmethod
     def synthesize(self, text: str) -> Optional[bytes]:
         """
-        合成语音
+        合成语音（一次性返回完整音频）
         
         Args:
             text: 文本内容
@@ -29,6 +29,21 @@ class BaseTTS(ABC):
             音频数据(bytes)
         """
         pass
+    
+    def synthesize_stream(self, text: str) -> Iterator[bytes]:
+        """
+        流式合成语音（生成器，逐块返回音频数据）
+        
+        Args:
+            text: 文本内容
+        
+        Yields:
+            音频数据块(bytes)
+        """
+        # 默认实现：将完整音频一次返回
+        audio = self.synthesize(text)
+        if audio:
+            yield audio
     
     @abstractmethod
     def synthesize_to_file(self, text: str, output_path: str) -> bool:

@@ -83,7 +83,7 @@ class WhisperASR(BaseASR):
             if not os.path.exists(str(model_path)):
                 logger.error("提示: 如果是网络问题，可以:")
                 logger.error("  1. 设置镜像: set HF_ENDPOINT=https://hf-mirror.com")
-                logger.error("  2. 手动下载模型: python download_whisper_model.py")
+                logger.error("  2. 手动下载模型: python scripts/download_whisper_model.py")
             raise
     
     def transcribe(self, audio_data: bytes) -> Optional[str]:

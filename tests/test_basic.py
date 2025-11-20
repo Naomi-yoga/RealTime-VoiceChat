@@ -5,8 +5,8 @@
 import sys
 from pathlib import Path
 
-# 添加src到路径
-sys.path.insert(0, str(Path(__file__).parent))
+# 添加项目根目录到路径
+sys.path.insert(0, str(Path(__file__).parent.parent))
 
 def test_config_manager():
     """测试配置管理器"""

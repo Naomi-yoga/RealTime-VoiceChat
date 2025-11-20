@@ -6,8 +6,8 @@
 
 - ✅ **多模型支持**：支持 DeepSeek、OpenAI、智谱AI、Kimi、Ollama 等多家大模型
 - ✅ **实时对话**：低延迟文本/语音交互体验
-- ✅ **语音识别**：支持 Whisper、Azure Speech 等ASR引擎
-- ✅ **语音合成**：支持 Edge TTS、Azure TTS、OpenAI TTS 等引擎
+- ✅ **语音识别**：支持 Whisper 本地 ASR 引擎
+- ✅ **语音合成**：支持 Edge TTS 引擎，流式合成
 - ✅ **语音包切换**：可自由切换不同音色的语音包
 - ✅ **对话管理**：自动保存对话历史，支持上下文记忆
 - ✅ **灵活配置**：YAML配置文件 + 环境变量
@@ -168,15 +168,11 @@ rt-voicechat-cli/
 
 ### ASR引擎
 
-- **Whisper** (本地) - 开源，支持多语言
-- **Azure Speech** - 微软云端服务
-- **百度语音** - 国内服务
+- **Whisper** (本地) - 基于 faster-whisper，开源，支持多语言，GPU/CPU 自适应
 
 ### TTS引擎
 
-- **Edge TTS** - 免费，音质好
-- **Azure TTS** - 微软云端服务
-- **OpenAI TTS** - OpenAI语音合成
+- **Edge TTS** - 免费，音质好，支持流式合成，多种中文语音包
 
 ## 📄 许可证
 

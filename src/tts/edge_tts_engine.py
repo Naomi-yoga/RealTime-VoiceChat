@@ -1,7 +1,7 @@
 """Edge TTS引擎"""
 import asyncio
 import edge_tts
-from typing import Optional
+from typing import Optional, Iterator
 from .base_tts import BaseTTS
 from ..utils import get_logger
 
@@ -77,3 +77,45 @@ class EdgeTTSEngine(BaseTTS):
             pitch=self.pitch
         )
         await communicate.save(output_path)
+    
+    def synthesize_stream(self, text: str) -> Iterator[bytes]:
+        """
+        流式合成语音
+        
+        Args:
+            text: 文本内容
+        
+        Yields:
+            音频数据块(bytes)
+        """
+        try:
+            # 使用asyncio运行异步流式合成
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+            try:
+                for chunk in loop.run_until_complete(self._stream_async(text)):
+                    yield chunk
+            finally:
+                loop.close()
+        except Exception as e:
+            logger.error(f"Edge TTS流式合成错误: {e}")
+    
+    async def _stream_async(self, text: str):
+        """异步流式合成"""
+        chunks = []
+        try:
+            communicate = edge_tts.Communicate(
+                text=text,
+                voice=self.voice,
+                rate=self.rate,
+                pitch=self.pitch
+            )
+            
+            async for chunk in communicate.stream():
+                if chunk["type"] == "audio":
+                    chunks.append(chunk["data"])
+            
+            return chunks
+        except Exception as e:
+            logger.error(f"Edge TTS异步流式合成错误: {e}")
+            return []

@@ -3,11 +3,15 @@ import sys
 import time
 import threading
 import queue
+from pathlib import Path
 from collections import deque
 from rich.console import Console
 from rich.live import Live
 from rich.panel import Panel
 from rich.text import Text
+
+# 添加项目根目录到路径
+sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from src.core import ConfigManager
 from src.asr import ASRManager

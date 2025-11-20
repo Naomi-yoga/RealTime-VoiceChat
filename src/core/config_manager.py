@@ -58,8 +58,6 @@ class ConfigManager:
             'DEEPSEEK_API_KEY': ['models', 'deepseek', 'api_key'],
             'OPENAI_API_KEY': ['models', 'openai', 'api_key'],
             'ZHIPU_API_KEY': ['models', 'zhipu', 'api_key'],
-            'AZURE_SPEECH_KEY': ['asr', 'azure', 'api_key'],
-            'AZURE_SPEECH_REGION': ['asr', 'azure', 'region'],
         }
         
         for env_var, config_path in env_mappings.items():

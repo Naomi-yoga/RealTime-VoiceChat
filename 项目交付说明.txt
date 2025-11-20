@@ -68,15 +68,19 @@ rt-voicechat-cli/
 │   ├── audio/                 # 音频处理
 │   ├── utils/                 # 工具函数
 │   └── main.py                # 主程序
+├── scripts/                   # 辅助脚本
+│   ├── build_exe.py           # 打包脚本
+│   └── download_whisper_model.py  # 模型下载脚本
+├── tests/                     # 测试文件
+│   ├── test_basic.py          # 基础测试
+│   └── test_realtime_asr.py   # 实时ASR测试
 ├── requirements.txt           # 依赖列表
 ├── .env.example              # 环境变量模板
 ├── README.md                 # 完整文档
 ├── QUICKSTART.md             # 快速开始
 ├── USAGE_EXAMPLES.md         # 使用示例
 ├── PROJECT_SUMMARY.md        # 项目总结
-├── run.bat                   # Windows启动脚本
-├── test_basic.py             # 基础测试
-└── build_exe.py              # 打包脚本
+└── run.bat                   # Windows启动脚本
 
 ===============================================
 支持的模型
@@ -90,21 +94,17 @@ LLM模型:
 - Ollama (本地免费)
 
 ASR引擎:
-- Whisper (本地)
-- Azure Speech
-- 百度语音
+- Whisper (本地, faster-whisper)
 
 TTS引擎:
-- Edge TTS (免费)
-- Azure TTS
-- OpenAI TTS
+- Edge TTS (免费，流式合成)
 
 ===============================================
 测试程序
 ===============================================
 
 运行基础测试:
-python test_basic.py
+python tests/test_basic.py
 
 测试将验证:
 - 配置管理
@@ -170,10 +170,10 @@ PROJECT_SUMMARY.md - 项目完成度总结
 ===============================================
 
 打包为exe:
-python build_exe.py
+python scripts/build_exe.py
 
 清理构建文件:
-python build_exe.py --clean
+python scripts/build_exe.py --clean
 
 ===============================================
 技术栈
