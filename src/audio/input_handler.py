@@ -99,7 +99,7 @@ class AudioInputHandler:
                 input=True,
                 input_device_index=self.device_index,
                 frames_per_buffer=self.chunk_size,
-                stream_callback=self._audio_callback if not callback else None
+                stream_callback=self._audio_callback if callback else None
             )
             
             self.is_recording = True
@@ -108,7 +108,7 @@ class AudioInputHandler:
                 # 使用回调模式
                 logger.info("使用回调模式开始录音")
             else:
-                # 使用队列模式
+                # 使用队列模式（阻塞读取）
                 self.record_thread = threading.Thread(target=self._record_loop)
                 self.record_thread.daemon = True
                 self.record_thread.start()

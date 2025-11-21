@@ -98,7 +98,16 @@ class WhisperASR(BaseASR):
             segments, info = self.model.transcribe(
                 audio_float,
                 language=self.language if self.language != "auto" else None,
-                beam_size=5
+                beam_size=5,
+                best_of=5,  # 增加候选数量
+                temperature=0.0,  # 使用贪心解码，提高稳定性
+                condition_on_previous_text=True,  # 利用上下文
+                vad_filter=True,  # 启用VAD过滤
+                vad_parameters=dict(
+                    threshold=0.5,
+                    min_speech_duration_ms=250,
+                    min_silence_duration_ms=500
+                )
             )
             
             # 合并所有段落

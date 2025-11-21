@@ -63,7 +63,7 @@ asr:
   
   # Whisper 配置
   whisper:
-    model: "base"  # 模型大小: tiny(~75MB), base(~150MB), small, medium, large
+    model: "small"  # 模型大小: tiny(~75MB), base(~150MB), small(~466MB), medium, large
     language: "zh"  # 识别语言: zh, en, auto
     device: "cpu"   # 运行设备: cpu, cuda
     compute_type: "int8"  # 计算类型: int8, float16, float32

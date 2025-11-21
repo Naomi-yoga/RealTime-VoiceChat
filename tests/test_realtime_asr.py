@@ -53,9 +53,10 @@ class RealtimeASR:
         # VAD 检测器
         self.vad = VADDetector(
             sample_rate=sample_rate,
-            aggressiveness=3,
+            aggressiveness=2,  # 降低激进度，避免截断语音（从3改为2）
             frame_duration_ms=30,
-            silence_duration_ms=700
+            silence_duration_ms=800,  # 增加静音等待时间，避免句子被截断
+            padding_duration_ms=400  # 增加前后填充，保留完整语音
         )
         
         # 识别队列

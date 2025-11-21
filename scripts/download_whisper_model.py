@@ -53,8 +53,9 @@ def download_model(model_name: str, use_mirror: bool = False):
     
     model_info = MODELS[model_name]
     
-    # 创建 models 目录
-    models_dir = Path(__file__).parent / "models"
+    # 创建 models 目录（项目根目录下）
+    project_root = Path(__file__).parent.parent  # 从 scripts/ 回到项目根目录
+    models_dir = project_root / "models"
     models_dir.mkdir(exist_ok=True)
     
     target_dir = models_dir / f"whisper-{model_name}"
