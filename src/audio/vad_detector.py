@@ -73,7 +73,13 @@ class VADDetector:
             (is_speech, audio_data): 是否检测到语音，以及完整语音数据（如果有）
         """
         # 确保帧长度正确
-        if len(frame) != self.frame_size * 2:  # int16 = 2 bytes
+        expected_size = self.frame_size * 2  # int16 = 2 bytes
+        if len(frame) != expected_size:
+            # 只在第一次不匹配时记录警告，避免日志过多
+            if not hasattr(self, '_size_warning_logged'):
+                logger.warning(f"VAD帧大小不匹配: 期望={expected_size}字节, 实际={len(frame)}字节, "
+                           f"frame_size={self.frame_size}, sample_rate={self.sample_rate}")
+                self._size_warning_logged = True
             return self.is_speech, None
         
         # VAD检测

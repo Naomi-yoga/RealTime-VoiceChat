@@ -2,28 +2,41 @@
 打包脚本 - 使用 PyInstaller 将程序打包为独立exe
 
 使用方法:
+    cd scripts
     python build_exe.py
+    
+    或在项目根目录：
+    python scripts/build_exe.py
 """
 import os
 import sys
 import shutil
 from pathlib import Path
 
+# 获取项目根目录（从 scripts/ 回到项目根目录）
+PROJECT_ROOT = Path(__file__).parent.parent.absolute()
+
 # PyInstaller配置
 APP_NAME = "RT-VoiceChat-CLI"
-MAIN_SCRIPT = "src/main.py"
+MAIN_SCRIPT = str(PROJECT_ROOT / "src" / "main.py")
 ICON_FILE = None  # 如果有图标文件，设置路径
 
-# 依赖的数据文件
+# 依赖的数据文件（使用绝对路径）
 DATA_FILES = [
-    ('config/default_config.yaml', 'config'),
-    ('.env.example', '.'),
+    (str(PROJECT_ROOT / "config" / "default_config.yaml"), 'config'),
+    (str(PROJECT_ROOT / ".env.example"), '.'),
 ]
 
 
 def build_exe():
     """构建exe文件"""
     print(f"开始打包 {APP_NAME}...")
+    print(f"项目根目录: {PROJECT_ROOT}")
+    
+    # 切换到项目根目录
+    original_dir = Path.cwd()
+    os.chdir(PROJECT_ROOT)
+    print(f"当前工作目录: {Path.cwd()}")
     
     # 检查 PyInstaller
     try:
@@ -31,6 +44,7 @@ def build_exe():
     except ImportError:
         print("错误: 未找到 PyInstaller")
         print("请运行: pip install pyinstaller")
+        os.chdir(original_dir)
         sys.exit(1)
     
     # 构建命令
@@ -70,12 +84,16 @@ def build_exe():
     # 执行打包命令
     cmd = " ".join(cmd_parts)
     print(f"执行命令: {cmd}")
+    print()
     
     result = os.system(cmd)
     
+    # 恢复原目录
+    os.chdir(original_dir)
+    
     if result == 0:
         print(f"\n✅ 打包成功!")
-        print(f"可执行文件位置: dist/{APP_NAME}.exe")
+        print(f"可执行文件位置: {PROJECT_ROOT / 'dist' / f'{APP_NAME}.exe'}")
         print(f"\n使用方法:")
         print(f"  1. 将 dist/{APP_NAME}.exe 复制到任意目录")
         print(f"  2. 在同一目录创建 .env 文件并配置API密钥")
@@ -88,20 +106,29 @@ def build_exe():
 def clean_build():
     """清理构建文件"""
     print("清理构建文件...")
+    print(f"项目根目录: {PROJECT_ROOT}")
+    
+    # 切换到项目根目录
+    original_dir = Path.cwd()
+    os.chdir(PROJECT_ROOT)
     
     dirs_to_remove = ['build', 'dist', '__pycache__']
     files_to_remove = [f'{APP_NAME}.spec']
     
     for dir_name in dirs_to_remove:
-        if Path(dir_name).exists():
-            shutil.rmtree(dir_name)
-            print(f"  已删除: {dir_name}/")
+        dir_path = PROJECT_ROOT / dir_name
+        if dir_path.exists():
+            shutil.rmtree(dir_path)
+            print(f"  已删除: {dir_path}")
     
     for file_name in files_to_remove:
-        if Path(file_name).exists():
-            os.remove(file_name)
-            print(f"  已删除: {file_name}")
+        file_path = PROJECT_ROOT / file_name
+        if file_path.exists():
+            os.remove(file_path)
+            print(f"  已删除: {file_path}")
     
+    # 恢复原目录
+    os.chdir(original_dir)
     print("清理完成")
 
 

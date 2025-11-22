@@ -92,15 +92,23 @@ class AudioInputHandler:
         
         try:
             # 打开音频流
+            # frames_per_buffer 需要的是样本数，不是字节数
+            # chunk_size 是字节数，需要除以 (样本宽度 * 声道数) 得到样本数
+            sample_width = 2 if self.format == pyaudio.paInt16 else (4 if self.format == pyaudio.paInt32 else 4)
+            frames_per_buffer = self.chunk_size // (sample_width * self.channels)
+            
             self.stream = self.pa.open(
                 format=self.format,
                 channels=self.channels,
                 rate=self.sample_rate,
                 input=True,
                 input_device_index=self.device_index,
-                frames_per_buffer=self.chunk_size,
+                frames_per_buffer=frames_per_buffer,
                 stream_callback=self._audio_callback if callback else None
             )
+            
+            logger.debug(f"音频流已打开: frames_per_buffer={frames_per_buffer}样本, "
+                        f"chunk_size={self.chunk_size}字节, sample_width={sample_width}")
             
             self.is_recording = True
             
@@ -138,6 +146,15 @@ class AudioInputHandler:
     
     def _audio_callback(self, in_data, frame_count, time_info, status):
         """PyAudio 流回调"""
+        # in_data 的长度应该是 chunk_size（字节数）
+        # 如果长度不匹配，记录警告
+        expected_size = self.chunk_size
+        actual_size = len(in_data)
+        if actual_size != expected_size and not hasattr(self, '_size_warning_logged'):
+            logger.warning(f"音频回调数据大小不匹配: 期望={expected_size}字节, 实际={actual_size}字节, "
+                         f"frame_count={frame_count}")
+            self._size_warning_logged = True
+        
         if self.callback:
             self.callback(in_data)
         else:

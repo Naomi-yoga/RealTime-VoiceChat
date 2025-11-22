@@ -25,8 +25,22 @@ class TTSManager:
         self._register_engines()
         
         # 初始化默认引擎
-        default_engine = config.get('engine', 'edge')
-        default_voice = config.get('voice', 'zh-CN-XiaoxiaoNeural')
+        # 优先使用voice_packs配置
+        active_voice = config.get('active_voice')
+        voice_packs = config.get('voice_packs', {})
+        
+        if active_voice and active_voice in voice_packs:
+            # 使用语音包配置
+            voice_pack = voice_packs[active_voice]
+            default_engine = voice_pack.get('engine', config.get('engine', 'edge'))
+            default_voice = voice_pack.get('voice', 'zh-CN-XiaoxiaoNeural')
+            logger.info(f"使用语音包: {active_voice} (引擎: {default_engine}, 语音: {default_voice})")
+        else:
+            # 使用默认配置
+            default_engine = config.get('engine', 'edge')
+            default_voice = config.get('voice', 'zh-CN-XiaoxiaoNeural')
+            if active_voice:
+                logger.warning(f"语音包 '{active_voice}' 不存在，使用默认配置")
         
         try:
             self.switch_engine(default_engine, voice=default_voice)

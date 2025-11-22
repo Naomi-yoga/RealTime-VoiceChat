@@ -75,12 +75,12 @@ tts:
   engine: "edge"
   
   # 通用参数
-  speech_rate: 1.0  # 语速 0.5-2.0
+  speech_rate: 1.5  # 语速 0.5-2.0
   pitch: 1.0  # 音调 0.5-2.0
   volume: 1.0  # 音量 0.0-1.0
   
   # 当前使用的语音包
-  active_voice: "female_gentle"
+  active_voice: "female_cheerful"
   
   # 语音包配置
   voice_packs:
@@ -139,7 +139,7 @@ audio:
   # VAD (语音活动检测) 配置
   vad:
     enabled: true
-    aggressiveness: 3  # 0-3, 越高越激进
+    aggressiveness: 2  # 0-3, 越高越激进
     frame_duration_ms: 30  # 10, 20, 30
     padding_duration_ms: 300
     silence_duration_ms: 700  # 静音多久后认为说话结束
