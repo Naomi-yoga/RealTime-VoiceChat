@@ -13,7 +13,7 @@ class ConversationManager:
     
     def __init__(
         self,
-        system_prompt: str = "你是一个友好、专业的AI助手。",
+        system_prompt: str = "你是一个友好、专业的AI助手。请用简洁、口语化的方式回答问题。使用纯文本的形式回答问题",
         max_history: int = 10,
         save_history: bool = True,
         history_file: str = "conversation_history.json"

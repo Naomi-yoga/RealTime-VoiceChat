@@ -387,8 +387,8 @@ class VoiceChatCLI:
                         ring_buffer_len = len(vad.ring_buffer) if hasattr(vad, 'ring_buffer') else 0
                         silence_counter = vad.silence_counter if hasattr(vad, 'silence_counter') else 0
                         
-                        console.print(f"[dim]VAD调试: triggered={vad_triggered}, is_speech={vad_is_speech}, "
-                                    f"ring_buffer={ring_buffer_len}, silence={silence_counter}, 能量={energy:.0f}[/dim]")
+                        # console.print(f"[dim]VAD调试: triggered={vad_triggered}, is_speech={vad_is_speech}, "
+                        #             f"ring_buffer={ring_buffer_len}, silence={silence_counter}, 能量={energy:.0f}[/dim]")
                         
                         if energy > energy_threshold and not vad_triggered:
                             # 计算ring_buffer中语音帧的比例
